@@ -1,0 +1,13 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Responses\BaseResponse;
+
+
+class DummyClass extends BaseResponse{
+
+    public function __construct() {
+      
+    }
+}

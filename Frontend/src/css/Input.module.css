@@ -1,0 +1,50 @@
+.container{
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    position:absolute;
+    width:100%;
+    bottom: 0;
+    margin-bottom: 10px;
+
+}
+.inputContainer{
+    background:yellow;
+    display:flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    padding: 10px 10px 10px 20px;
+    max-height: 4.5em;
+    width: 80%;
+    border-radius: 12px;
+    overflow-y: auto;
+    background:var(--white);
+    box-shadow: var(--box-shadow-1);
+    transition: .4s;
+}
+.input{
+    position:relative;
+    bottom: 0;
+    font-size: 14px;
+    color: var(--text-color);
+    width: 92%;
+    right: 9%;
+}
+.inputContainer:focus-within, .input:focus{
+    outline: 0;
+}
+.inputContainer:focus-within{
+    box-shadow: var(--box-shadow-2);
+}
+.sendIcon{
+    background:var(--white);
+    padding: 10px 15px;
+    font-size: 15px;
+    border-radius: 12px;
+    box-shadow: var(--box-shadow-1);
+}
+.emojiButton{
+    position: absolute;
+    font-size: 18px;
+    color: var(--black);
+}

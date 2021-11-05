@@ -1,0 +1,33 @@
+.wrapper{
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
+.container{
+    position: absolute;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 0px;
+    min-width: 140px;
+    box-shadow: var(--box-shadow-1);
+    background:var(--white);
+    border-radius: 3px;
+    z-index: 2;
+}
+.item{
+    color:var(--black);
+    cursor:pointer;
+    margin: 0;
+    width:100%;
+    padding: 7px 15px;
+    transition: .2s;
+    font-size: 15px;
+}
+.item:hover{
+    background: var(--black);
+    color: white;
+}

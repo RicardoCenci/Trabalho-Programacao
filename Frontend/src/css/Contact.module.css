@@ -1,0 +1,81 @@
+.container{
+    display: inline-grid; 
+    position: relative;
+    grid-template-columns: 0.5fr 3fr;;
+    grid-template-rows: 1fr 1fr; 
+    padding:15px;
+    gap: 0px 10px;
+    background:var(--primaryBg);
+    /* width: clamp(10%, 200px, 250px); */
+    width: 100%;
+    justify-items: center;
+    align-items: center;
+    color: var(--textColor);
+    grid-template-areas: 
+    "userImage userName"
+    "userImage lastMessageData"; 
+}
+
+.container.unread::after{
+    content:attr(data-unread-messages);
+    position:absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 9px;
+    /* width:3ch; */
+    min-width: 3ch;
+    height: 3ch;
+    left:41px;
+    padding: 1px;
+    top:41px;
+    background:var(--primary-bg);
+    color:var(--white);
+    border-radius: 25px;
+    font-weight: bold;
+}
+.container div{
+    display:flex;
+    align-self: end;
+    width:100%;
+}
+.container p{
+    margin: 0;
+}
+.photo{
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    justify-self: start;
+    border-radius: 50%;
+    grid-area: userImage;
+    margin-right: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.12);
+}
+.name{
+    display:flex;
+    align-items:center;
+    grid-area: userName;
+    width:100%;
+    margin: 0;
+    font-size: 16px;
+    opacity: .87;
+}
+.lastMessage{
+    grid-area: lastMessageData;
+    justify-content: space-between;
+    align-self:flex-start!important;
+    
+}
+.lastMessage .text{
+    margin: 0;
+    font-size: 13px;
+    margin-top: 2px;
+    opacity: .78
+}
+.timestamp{
+    margin: 0;
+    font-size: 12px;
+    font-weight: 500;
+    opacity: .68;
+}

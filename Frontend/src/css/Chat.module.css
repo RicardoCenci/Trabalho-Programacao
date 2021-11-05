@@ -1,0 +1,197 @@
+.container{
+    width: 76.4%;
+    position: relative;
+    background-color: rgb(235, 235, 235);
+}
+.activeConversation{
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    grid-gap: 0px 18px;
+    width: 100%;
+    align-items: center;
+    background-color: rgb(74, 98, 150);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 25%);
+    padding: 10px;
+    padding-left: 40px;
+}
+.activeConversation .photo{
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+}
+.activeConversation .name{
+    justify-self: start;
+    opacity: var(--highEmphasis);
+    color: white;
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.inputContainer{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    bottom:0;
+    min-height: 10%;
+    padding: 10px;
+    position:absolute;
+}
+.inputWrapper{
+    position:relative;
+    display:flex;
+    overflow:hidden;
+    background-color: rgb(255, 255, 255);
+    border-radius: 25px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.10);
+    justify-content: center;
+    align-items: center;
+
+}
+.input{
+    outline: none; 
+    user-select: text; 
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    min-height: 1em;
+    max-height: 4em;
+    width: 55ch;
+    padding: 1.5ch 3ch;
+    border-radius: 25px;
+    margin-right: 1.5ch;
+    overflow-x: auto;
+}
+.messagesWindow{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    height: 80%;
+    width: 100%;
+    padding: 20px 50px;
+    --userMessageBG : rgba(113, 255, 172, 0.979);
+    --contactMessageBG : rgb(1, 248, 104)
+}
+.message p{
+    display: inline-block;
+    padding: 0.8em 1em;
+    margin: 3px;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    border-radius: 20px;
+    position: relative;
+    max-width: 70%;
+}
+.message{
+    position: relative;
+}
+:global(.user-message) p::after{
+    content:'';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 15px solid var(--userMessageBG);
+    border-right: 10px solid transparent;
+    position:absolute;
+    right:-5px;
+    top: 0;
+}
+:global(.contact-message) p::after{
+    content:'';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 15px solid var(--contactMessageBG);
+    border-left: 10px solid transparent;
+    position:absolute;
+    left:-5px;
+    top: 0;
+}
+:global(.user-message) p{
+    border-top-right-radius: 0px;
+    padding-right: 75px;
+    background-color: var(--userMessageBG);
+
+}
+:global(.contact-message) p{
+    border-top-left-radius: 0px;
+    padding-right: 50px;
+    background-color: var(--contactMessageBG);
+    
+}
+:global(.user-message){
+    text-align: end;
+}
+:global(.user-message) img{
+    position: absolute;
+    bottom:15px;
+    right: 15px;
+    z-index: 1000;
+}
+.messageTimestamp{
+    position: absolute;
+    /* bottom: 25%; */
+    bottom:11px;
+
+    font-size: 0.8em;
+}
+:global(.user-message) .messageTimestamp{
+    /* right:101%; */
+    right: 33px;
+}
+:global(.contact-message) .messageTimestamp{
+    right: 13px;
+    /* left:101%; */
+}
+.input:focus{
+    /* outline: 0; */
+}
+.send,
+.emoji{
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 40px;
+    width: 40px;
+    margin-right: 1.2ch;
+    right:2%;
+    border-radius: 50%;
+    transition: .4s;
+}
+.send{
+    background-image: url(../images/send.png);
+}
+.emoji{
+    background-image: url(../images/smile.png);
+
+}
+.send:hover,
+.emoji:hover{
+    background-color: rgba(207, 207, 207, 0.767);
+
+}
+
+
+/* width */
+.input::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+.input::-webkit-scrollbar-track {
+background: #f1f1f1;
+}
+
+/* Handle */
+.input::-webkit-scrollbar-thumb {
+background: #888;
+}
+
+/* Handle on hover */
+.input::-webkit-scrollbar-thumb:hover {
+background: #555;
+
+}

@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "target": "es5",
+    "module": "esnext",
+    "rootDir": "src",
+    "outDir": "build",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@contexts/*": ["./src/contexts/*"],
+      "@types": ["./src/@types.ts"],
+      "@images": ["./src/images/*"],
+      "@icon": ["./src/icons/*"],
+      "@helpers/*": ["./src/helpers/*"],
+      "@helpers": ["./src/helpers/index.ts"],
+      "@features/*": ["./src/features/*"],
+      "@store": ["./src/store.ts"],
+      "@hooks": ["./src/hooks.ts"]
+    }
+  },
+  "include": [
+    "src"
+  ]
+}

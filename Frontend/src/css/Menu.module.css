@@ -1,0 +1,81 @@
+.container{
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: 1fr 1fr; 
+    gap: 15px 0px; 
+    grid-template-areas: 
+      ". ."
+      "tabs tabs"; 
+    width: 100%;
+    padding:25px 25px 0px 25px;
+    background: var(--primary-bg)
+}
+.container h1{
+    color: var(--white);
+    opacity: .87;
+    margin: 0;
+    font-size: 20px;
+}
+.icon{
+    display:inline-block;
+    width:25px;
+    height:25px;
+}
+.icons{
+    justify-self: end;
+    display: flex;
+    gap: 10px;
+    color: var(--white);
+}
+.contextMenu{
+    /* background-image: url(../images/ThreeBallsIcon.svg); */
+    /* background-size:15%; */
+    /* background-position: center; */
+    /* background-repeat: no-repeat; */
+    color: var(--white);
+    opacity: .87
+}
+.tabs{
+    grid-area: tabs;
+    color: var(--white);
+    display: flex;
+    justify-content: space-evenly;
+    gap: 50px;
+    align-items: center;
+}
+.tab{
+    padding: 10px 30px;
+    margin: 0;
+    position: relative;
+    overflow:hidden;
+    cursor:pointer;
+}
+
+.tab.active{
+    /* color: red; */
+}
+.tab:first-of-type::after{
+    transform: translate(100% , 0);
+}
+.tab:last-of-type::after{
+    transform: translate(-100% , 0);
+}
+
+
+.tab.active::after{
+    transform: translate(0 , 0);
+}
+.tab.active{
+    color: var(--third-bg);
+}
+.tab::after{
+    content:'';
+    position: absolute;
+    display:inline-block;
+    height:4px;
+    width: 100%;
+    transition:transform .1s ease-in-out;
+    bottom: 0;
+    right:0;
+    background:var(--third-bg);
+}
