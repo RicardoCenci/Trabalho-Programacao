@@ -1,0 +1,11 @@
+.container{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 120px));
+    gap: 0.3em 1em;
+    justify-content:center;
+    padding-top:3em;
+}
+.visualizerContainer{
+    background-color: red;
+    height:100vh;
+}

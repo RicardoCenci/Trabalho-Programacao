@@ -1,14 +1,13 @@
 .container{
     display: grid; 
     grid-template-columns: 1fr 1fr; 
-    grid-template-rows: 1fr 1fr; 
-    gap: 15px 0px; 
+    grid-template-rows: 1fr 0.5fr; 
     grid-template-areas: 
       ". ."
       "tabs tabs"; 
     width: 100%;
-    padding:25px 25px 0px 25px;
-    background: var(--primary-bg)
+    padding:12px 12px 0px 12px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .container h1{
     color: var(--white);
@@ -17,43 +16,46 @@
     font-size: 20px;
 }
 .icon{
-    display:inline-block;
+    display:flex;
+    justify-content:center;
+    align-items: center;
     width:25px;
     height:25px;
 }
 .icons{
     justify-self: end;
     display: flex;
-    gap: 10px;
-    color: var(--white);
+    gap: 0.4em;
+    color: var(--black);
 }
 .contextMenu{
     /* background-image: url(../images/ThreeBallsIcon.svg); */
     /* background-size:15%; */
     /* background-position: center; */
     /* background-repeat: no-repeat; */
-    color: var(--white);
+    color: var(--black);
     opacity: .87
 }
 .tabs{
     grid-area: tabs;
-    color: var(--white);
+    color: var(--black);
     display: flex;
     justify-content: space-evenly;
-    gap: 50px;
+    gap: 25px;
     align-items: center;
 }
 .tab{
-    padding: 10px 30px;
+    padding: 10px 25px;
     margin: 0;
     position: relative;
     overflow:hidden;
     cursor:pointer;
+    font-weight: bold;
+    opacity: .78;
+    font-size: 0.9em;
+    text-transform: uppercase;
 }
 
-.tab.active{
-    /* color: red; */
-}
 .tab:first-of-type::after{
     transform: translate(100% , 0);
 }
@@ -66,7 +68,8 @@
     transform: translate(0 , 0);
 }
 .tab.active{
-    color: var(--third-bg);
+    color: var(--primary-bg);
+    opacity: 1;
 }
 .tab::after{
     content:'';
@@ -77,5 +80,5 @@
     transition:transform .1s ease-in-out;
     bottom: 0;
     right:0;
-    background:var(--third-bg);
+    background:var(--primary-bg);
 }

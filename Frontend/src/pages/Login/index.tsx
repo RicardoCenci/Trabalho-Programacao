@@ -49,7 +49,6 @@ export default function Login(){
                 setLoginMessage({...errorMessage, text : err.getMessage()})  
                 setPasswordMessage({...errorMessage, text : err.getMessage()})  
             }
-            
             if(err.isValidationError()){
                 const errors = err.getValidationErrors()
                 !errors['email'] || setLoginMessage({...errorMessage, text : errors['email'][0]})  

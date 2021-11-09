@@ -28,7 +28,7 @@ export default async function createAPI(credentials: any, callbacks : {onSuccess
 
 
     function get(url : string, header ={}) : Promise<HttpResponse>{
-        const payload = createRequest('GET' , {} , header);
+        const payload = createRequest('GET' , null , header);
         return fetch(`${endpoint}${url}`, payload)
             .then(handleResponse)
     }
@@ -48,6 +48,7 @@ export default async function createAPI(credentials: any, callbacks : {onSuccess
             return
         }
         var r;
+
         await post('/login', credentials)
                 .then((response)=>{
                     
@@ -57,6 +58,7 @@ export default async function createAPI(credentials: any, callbacks : {onSuccess
                         authenticationSuccess = true
                         callbacks['onSuccess'](response)
                     }
+
                 }).catch((err : HttpError)=>{
                     if (typeof callbacks['onError'] === 'function') {
                         callbacks['onError'](err)
@@ -78,21 +80,22 @@ export default async function createAPI(credentials: any, callbacks : {onSuccess
         }
         return res
     }
-    async function createResponse(response : Response){
+    async function createResponse(response : Response){      
+        const responseData = await response.text();
+        
         return {
             ok: response.ok,
             status : response.status,
             statusMessage: response.statusText,
             path: response.url,
             headers: response.headers,
-            body : await response.json()
+            body : JSON.parse(responseData)
         }
     }
     function createRequest(method: string , body : Object | null  = null ,header = {}){
         const init = new Map()
-
         init.set('method', method)
-
+       
         init.set('headers', createHeader(header))
         !body || init.set('body', JSON.stringify(body))
 

@@ -30,10 +30,18 @@
     width: 100%;
     z-index: 2;
 }
-.userPhoto img{
-    width:25px;
-    height:25px;
+.userPhotoRouded{
+    display:flex;
+    justify-content:center;
+    align-items: center;
     border-radius: 50%;
+    height:25px;
+    width:25px;
+    overflow:hidden;
+}
+.userPhoto img{
+    width:150%;
+    height:110%;
     border: 1px solid rgba(37, 38, 39, 0.3);
 }
 .name{
@@ -41,3 +49,5 @@
     font-size: 12px;
     z-index: 2;
 }
+
+

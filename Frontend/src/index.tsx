@@ -25,6 +25,7 @@ import Recovery from '@pages/Recovery';
 
 import store from '@store'
 import Loading from '@components/Loading';
+import { useAppSelector } from '@hooks';
 // const ws = new Websocket
 
 
@@ -35,7 +36,8 @@ ReactDOM.render(
      <Router>
        <GlobalContextProvider>
          <Switch>
-             {/* <PrivateRoute path="/" exact>
+            
+            <PrivateRoute path="/" exact>
                <Menu tabs={[
                 { name: 'Contatos',
                   component : ContactsPage},
@@ -55,8 +57,7 @@ ReactDOM.render(
 
             <Route path="/recovery">
               <Recovery />
-            </Route> */}
-          <Loading/>
+            </Route>
         </Switch>
       </GlobalContextProvider>
     </Router>

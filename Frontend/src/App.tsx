@@ -9,6 +9,9 @@ import { getApi } from '@features/api/apiSlice';
 
 export default function App() {
   const {activePageComponent ,activeTab,currentContact , openChat} = useContext(GlobalContext)
+  const page = useAppSelector(state => state.global.popupPage);
+
+  
   if (typeof activePageComponent?.current !== 'function') {
     return (<div>Loading...</div>)
   }
@@ -23,6 +26,8 @@ export default function App() {
       exit:     { x: '-100%', position:'absolute'}
     },
   }
+
+  
   return (<>
     <main className={style.container}>
           {!openChat && <AnimatePresence>
@@ -38,15 +43,7 @@ export default function App() {
         </AnimatePresence>}
     </main>
     <AnimatePresence>
-      {currentContact && openChat && <motion.div
-          initial={{y : '100%'}}
-          animate={{ y: 0}}
-          transition={{ ease: "easeInOut", duration: .2 }}
-          exit={{x:'100%'}}
-          className={style.chatContainer}
-        >
-          <Chat currentContact={currentContact}/>
-        </motion.div>}
+      {page}
     </AnimatePresence>
   </>);
 }

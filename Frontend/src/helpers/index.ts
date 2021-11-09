@@ -1,7 +1,6 @@
 import moment from 'moment'
 import 'moment-timezone';
 import 'moment/locale/pt-br';
-import { useRef } from 'react';
 
 export function useDate(timestamp : number){
     if (timestamp.toString().length < 11) {
@@ -148,4 +147,9 @@ export function getCookie(cname : string){
         }
     }
     return "";
+}
+export function isEmpty(obj : Object){
+    return obj 
+    && Object.keys(obj).length === 0
+    && Object.getPrototypeOf(obj) === Object.prototype
 }

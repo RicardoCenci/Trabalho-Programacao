@@ -1,6 +1,4 @@
-import { GlobalContext } from "@contexts/GlobalContext";
 import { useAppSelector } from "@hooks";
-import { useContext } from "react";
 import {
     Route,
     Redirect

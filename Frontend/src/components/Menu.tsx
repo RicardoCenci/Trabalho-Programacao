@@ -2,6 +2,7 @@ import { GlobalContext } from '@contexts/GlobalContext'
 import style from '@styles/Menu.module.css'
 import { SyntheticEvent, useCallback, useContext, useEffect } from 'react'
 import ContextMenu from './ContextMenu'
+import logoStandalone from '@images/Logo Standard.svg'
 
 export default function Menu(props : any){
     const {activeTab, setActiveTab , activePageComponent} = useContext(GlobalContext)
@@ -19,10 +20,10 @@ export default function Menu(props : any){
     const handleContextMenu = useCallback((e)=>{alert(e)},[])
     return(
         <div className={style.container}>
-            <h1>Whatsapp 2</h1>
+            <img src={logoStandalone}/>
             <div className={style.icons}>
                 <span className={`${style.search} icon-magnify-glass ${style.icon}`}></span>
-                <ContextMenu icon={'menu'} className={style.contextMenu} itens={[
+                <ContextMenu icon={'menu'} className={`${style.icon} ${style.contextMenu}`} itens={[
                     {text : "teste1"},
                     {text : "teste2"},
                 ]} defaultAction={handleContextMenu}/>

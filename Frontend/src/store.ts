@@ -5,6 +5,7 @@ import messagesReducer from '@features/messages/messageSlice'
 import contactsReducer from '@features/contacts/contactsSlice'
 import userReducer from '@features/user/userSlice'
 import apiSlice from '@features/api/apiSlice'
+import globalSlice from '@features/global/globalSlice'
 
 const store = configureStore({
   middleware: getDefaultMiddleware =>
@@ -15,7 +16,8 @@ const store = configureStore({
     user : userReducer,
     currentChat: messagesReducer,
     contacts: contactsReducer,
-    api: apiSlice
+    api: apiSlice,
+    global: globalSlice
   },
 })
 

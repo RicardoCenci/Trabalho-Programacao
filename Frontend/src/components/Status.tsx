@@ -1,21 +1,36 @@
 import { StatusT } from "@types"
 import style from '@styles/Status.module.css'
+import photo from '@images/tree-736885__480.jpg'
+import userp from '@images/default.png'
+import { AnimatePresence, motion } from "framer-motion"
+import { useCallback, useState } from "react"
 
-function Status(props : any){
-    const status: StatusT = props.status
+function Status({status, ...props} : {status?: StatusT, [key:string]:any}){
+    const status1 = {last_status:{
+        url: photo
+    }} 
     const user = {
-        photo: 'a',
-        first_name: 'b',
-        last_name:'c'
+        photo: userp,
+        first_name: 'Ricardo',
+        last_name:'Cenci Fabris',
+
     }
-    return(
-        <div className={style.container} style={{backgroundImage: `url(${status.last_status.url})`}}>
+    return(<>
+        <div className={style.container} {...props} style={{backgroundImage: `url(${status1.last_status.url})`}}>
             <div className={style.userPhoto}>
-                <img src={user.photo} alt={`${user.first_name} ${user.last_name}`}/>
+                <div className={style.userPhotoRouded}>
+                    <img src={user.photo} alt={`${user.first_name} ${user.last_name}`}/>
+                </div>
             </div>
             <p className={style.name}>{user.first_name} {user.last_name}</p>
         </div>
+        </>
     )
 }
 
+
 export default Status
+
+function useStatus(arg0: boolean): [any, any] {
+    throw new Error("Function not implemented.")
+}

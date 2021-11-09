@@ -14,7 +14,6 @@ Route::group(['api'], function(){
     
 });
 
-
 Route::group(['middleware' => ['auth:sanctum']], function(){
     
     Route::prefix('my')->group(function(){
