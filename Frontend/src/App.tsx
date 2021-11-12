@@ -3,7 +3,6 @@ import { GlobalContext } from "@contexts/GlobalContext"
 import { useContext} from 'react';
 import React from 'react';
 import { AnimatePresence, motion } from "framer-motion"
-import Chat from '@pages/Chat'
 import { useAppSelector } from '@hooks';
 import { getApi } from '@features/api/apiSlice';
 
@@ -26,8 +25,6 @@ export default function App() {
       exit:     { x: '-100%', position:'absolute'}
     },
   }
-
-  
   return (<>
     <main className={style.container}>
           {!openChat && <AnimatePresence>
@@ -43,7 +40,13 @@ export default function App() {
         </AnimatePresence>}
     </main>
     <AnimatePresence>
-      {page}
+        {<PopupPage page={page}/>}
     </AnimatePresence>
   </>);
+}
+function PopupPage({page = null} : { page:any}){
+  return (<>
+    {page && page}
+  </>
+    )
 }

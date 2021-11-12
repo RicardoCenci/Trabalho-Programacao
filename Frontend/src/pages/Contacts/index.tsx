@@ -8,6 +8,7 @@ import { randomColor } from '@helpers'
 import Chat from '@pages/Chat'
 import { motion } from 'framer-motion'
 import { useAppDispatch } from '@store'
+import { recievedPage } from '@features/global/globalSlice'
 
 const contatos : Array<ContactT> = [ 
     {
@@ -35,9 +36,10 @@ function Page(){
   const dispatch = useAppDispatch();
   const openChat = useCallback((e : SyntheticEvent, contact : ContactT)=>{
     // dispatch()
+    dispatch(recievedPage(<ChatPage/>))
     setCurrentContact(contact)
     setOpenChat(true)
-  },[setCurrentContact,setOpenChat])
+  },[setCurrentContact,setOpenChat, dispatch])
 
     return(<>
         <div className={style.container}>

@@ -6,7 +6,7 @@ export const GlobalContext = React.createContext<GlobalContextT>({})
 export function GlobalContextProvider(props : any){
 
     const [user, setUser] = useState<UserT | null>(null);
-    const [activeTab, setActiveTab] = useState('contatos')
+    const [activeTab, setActiveTab] = useState('status')
     const activePageComponent = useRef(null)
     const [currentContact, setCurrentContact] = useState(null)
     const [openChat, setOpenChat] = useState(false)

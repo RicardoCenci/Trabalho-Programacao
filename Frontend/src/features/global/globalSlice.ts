@@ -3,7 +3,7 @@ import { FunctionComponentElement } from 'react'
 
 export interface GlobalState{
     loading : number,
-    popupPage?: FunctionComponentElement<any>
+    popupPage?: any
 }
 
 const initialState : GlobalState = {
@@ -16,9 +16,12 @@ const globalSlice = createSlice({
     reducers:{
         recievedLoading(state, action:PayloadAction<number>){
             state.loading = action.payload
+        },
+        recievedPage(state, action : PayloadAction<any>){
+            state.popupPage = action.payload
         }
     }
 })
 
-export const { recievedLoading } = globalSlice.actions
+export const { recievedLoading,recievedPage } = globalSlice.actions
 export default globalSlice.reducer;

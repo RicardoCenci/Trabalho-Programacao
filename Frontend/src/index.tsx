@@ -1,5 +1,5 @@
 import '@icons/style.css'
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 
@@ -26,6 +26,7 @@ import Recovery from '@pages/Recovery';
 import store from '@store'
 import Loading from '@components/Loading';
 import { useAppSelector } from '@hooks';
+import { AnimatePresence, motion } from 'framer-motion';
 // const ws = new Websocket
 
 
@@ -33,7 +34,7 @@ import { useAppSelector } from '@hooks';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-     <Router>
+     {/* <Router>
        <GlobalContextProvider>
          <Switch>
             
@@ -60,9 +61,39 @@ ReactDOM.render(
             </Route>
         </Switch>
       </GlobalContextProvider>
-    </Router>
+    </Router> */}
+    <Playground/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
 
+
+
+function Playground(){
+  const [open, setOpen] = useState(false)
+  const [page, setPage] = useState<any>(null)
+  const Page1 = ()=>{
+    return <p>Page1</p>
+  }
+  const Page2 = ()=>{
+    return <p>Page2</p>
+    
+  }
+  return(<>
+            <AnimatePresence>
+                {page && <motion.div
+                  initial={{y : '100%'}}
+                  animate={{ y: 0}}
+                  transition={{ ease: "easeInOut", duration: .2 }}
+                  exit={{x:'100%'}}
+                >
+                  {page}
+                </motion.div>}
+
+            </AnimatePresence>
+            <button onClick={()=>setPage(Page1)}>Page1</button>
+            <button onClick={()=>setPage(Page2)}>Page2</button>
+            <button onClick={()=>setPage(null)}>Exit</button>
+  </>)
+}

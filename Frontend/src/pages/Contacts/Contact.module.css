@@ -3,3 +3,11 @@
     /* background-color: #FFFFFF; */
     /* transform: translateX(100%) */
 }
+
+
+.chatContainer{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
