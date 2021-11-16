@@ -3,11 +3,13 @@ import style from '@styles/Menu.module.css'
 import { SyntheticEvent, useCallback, useContext, useEffect } from 'react'
 import ContextMenu from './ContextMenu'
 import logoStandalone from '@images/Logo Standard.svg'
+import { useAppSelector } from '@hooks'
 
 export default function Menu(props : any){
     const {activeTab, setActiveTab , activePageComponent} = useContext(GlobalContext)
-    const handleClick = useCallback((e : SyntheticEvent, tab : any)=>{
+    const page = useAppSelector(state => state.global.popupPage);
 
+    const handleClick = useCallback((e : SyntheticEvent, tab : any)=>{
         activePageComponent.current = tab.component
         setActiveTab(tab.name)
     },[activePageComponent,setActiveTab])
@@ -35,6 +37,5 @@ export default function Menu(props : any){
                     return <p key={`menu-item-${tab.name}`} className={`${style.tab} ${activeTab.toUpperCase() === tab.name.toUpperCase() ? style.active : ''}`} onClick={(e)=>handleClick(e,tab)}>{tab.name}</p>
                 })}
             </div>
-        </div>
-        )
+        </div>)
 }

@@ -34,7 +34,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-     {/* <Router>
+     <Router>
        <GlobalContextProvider>
          <Switch>
             
@@ -61,39 +61,8 @@ ReactDOM.render(
             </Route>
         </Switch>
       </GlobalContextProvider>
-    </Router> */}
-    <Playground/>
+    </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-
-
-function Playground(){
-  const [open, setOpen] = useState(false)
-  const [page, setPage] = useState<any>(null)
-  const Page1 = ()=>{
-    return <p>Page1</p>
-  }
-  const Page2 = ()=>{
-    return <p>Page2</p>
-    
-  }
-  return(<>
-            <AnimatePresence>
-                {page && <motion.div
-                  initial={{y : '100%'}}
-                  animate={{ y: 0}}
-                  transition={{ ease: "easeInOut", duration: .2 }}
-                  exit={{x:'100%'}}
-                >
-                  {page}
-                </motion.div>}
-
-            </AnimatePresence>
-            <button onClick={()=>setPage(Page1)}>Page1</button>
-            <button onClick={()=>setPage(Page2)}>Page2</button>
-            <button onClick={()=>setPage(null)}>Exit</button>
-  </>)
-}

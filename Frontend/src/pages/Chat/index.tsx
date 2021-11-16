@@ -7,13 +7,18 @@ import DOMPurify from 'dompurify';
 import ChatMessage from '@components/Messages'
 import ContextMenu from '@components/ContextMenu'
 import { randomNumberBetween } from '@helpers'
+import { recievedPage } from '@features/global/globalSlice'
+import { useAppDispatch } from '@store'
 function Chat(props:any){
     const {currentContact,messages,setOpenChat,setMessages } = useContext(GlobalContext)
     const chatView = useRef<HTMLDivElement>(null)
     const input = useRef<HTMLDivElement>(null)
+    const dispatch = useAppDispatch();
 
     const closeChat = useCallback((e)=>{
+        console.log('test');
         setOpenChat(false)
+        dispatch(recievedPage(null))
     },[setOpenChat])
 
     const handleSendMessage = useCallback((message : MessageT)=>{
@@ -134,3 +139,7 @@ function Chat(props:any){
 }
 
 export default Chat
+
+function dispatch(arg0: { payload: any; type: string }) {
+    throw new Error('Function not implemented.')
+}

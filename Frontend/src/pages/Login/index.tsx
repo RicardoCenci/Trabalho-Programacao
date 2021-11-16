@@ -44,7 +44,12 @@ export default function Login(){
         }
         const handleRej = (err : HttpError)=>{
             const errorMessage  = {color: 'red',icon: 'icon-close', text: 'Something went wrong'};
-
+            setLoading(false)
+            if (!err.hasOwnProperty('getStatus')) {
+                console.log(err)
+                debugger
+                return
+            }
             if (err.getStatus() === 401) {
                 setLoginMessage({...errorMessage, text : err.getMessage()})  
                 setPasswordMessage({...errorMessage, text : err.getMessage()})  
@@ -54,7 +59,6 @@ export default function Login(){
                 !errors['email'] || setLoginMessage({...errorMessage, text : errors['email'][0]})  
                 !errors['password'] || setPasswordMessage({...errorMessage, text : errors['password'][0]})
             }
-            setLoading(false)
 
         };
         const handleSuccess = (res: any)=>{

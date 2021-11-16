@@ -13,12 +13,19 @@ export default function StatusVisualizer({status} : {status:any}){
 
     },[])
     const StatusCounter = ()=>{
+        const StatusPiece = ({percentage = 0} : {percentage : number}) => {
+            return (
+                <span className={`${style.statusCountCell} ${percentage === 100 ? style.viewd : ''}`}>
+                    <span className={style.statusPiece} style={{width : `${percentage}%`}}></span>
+                </span>
+            )
+        }
         return (
             <div className={style.statusCount}>
-                <span className={`${style.statusCountCell} ${style.viewd}`}></span>
-                <span className={`${style.statusCountCell}`}></span>
-                <span className={`${style.statusCountCell}`}></span>
-                <span className={`${style.statusCountCell}`}></span>
+                <StatusPiece percentage={100}/>
+                <StatusPiece percentage={50}/>
+                <StatusPiece percentage={0}/>
+                <StatusPiece percentage={0}/>
             </div>
         )
     }

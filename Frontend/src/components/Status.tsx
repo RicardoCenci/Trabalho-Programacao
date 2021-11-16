@@ -2,8 +2,6 @@ import { StatusT } from "@types"
 import style from '@styles/Status.module.css'
 import photo from '@images/tree-736885__480.jpg'
 import userp from '@images/default.png'
-import { AnimatePresence, motion } from "framer-motion"
-import { useCallback, useState } from "react"
 
 function Status({status, ...props} : {status?: StatusT, [key:string]:any}){
     const status1 = {last_status:{
@@ -24,13 +22,9 @@ function Status({status, ...props} : {status?: StatusT, [key:string]:any}){
             </div>
             <p className={style.name}>{user.first_name} {user.last_name}</p>
         </div>
-        </>
+    </>
     )
 }
 
 
 export default Status
-
-function useStatus(arg0: boolean): [any, any] {
-    throw new Error("Function not implemented.")
-}

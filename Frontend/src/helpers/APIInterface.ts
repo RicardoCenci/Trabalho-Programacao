@@ -51,7 +51,6 @@ export default async function createAPI(credentials: any, callbacks : {onSuccess
 
         await post('/login', credentials)
                 .then((response)=>{
-                    
                     r = createToken(response.body.access_token)
                     setAuthCookie(r)
                     if (typeof callbacks['onSuccess'] === 'function') {
