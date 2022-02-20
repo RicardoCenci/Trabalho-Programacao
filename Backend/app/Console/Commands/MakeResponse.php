@@ -1,12 +1,11 @@
 <?php
 
-namespace Illuminate\Foundation\Console;
+namespace App\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class ConsoleMakeCommand extends GeneratorCommand
+class ResponseMakeCommand extends GeneratorCommand
 {
     /**
      * The console command name.
@@ -71,6 +70,7 @@ class ConsoleMakeCommand extends GeneratorCommand
      */
     protected function getArguments()
     {
+        
         return [
             ['name', InputArgument::REQUIRED, 'The name of the response.'],
         ];

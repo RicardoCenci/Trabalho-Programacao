@@ -1,5 +1,5 @@
 import '@icons/style.css'
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 
@@ -24,11 +24,6 @@ import Register from '@pages/Register';
 import Recovery from '@pages/Recovery';
 
 import store from '@store'
-import Loading from '@components/Loading';
-import { useAppSelector } from '@hooks';
-import { AnimatePresence, motion } from 'framer-motion';
-// const ws = new Websocket
-
 
 
 ReactDOM.render(

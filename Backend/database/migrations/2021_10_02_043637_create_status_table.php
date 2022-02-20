@@ -17,7 +17,7 @@ class CreateStatusTable extends Migration
             $table->id();
             $table->foreignId('owner_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('description')->nullable();
-            $table->foreignId('content')->references('id')->on('attachment')->nullable(); 
+            $table->foreignId('content_id')->references('id')->on('attachment')->nullable(); 
             $table->timestamps();
         });
     }

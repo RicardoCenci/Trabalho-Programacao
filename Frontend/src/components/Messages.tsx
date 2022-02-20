@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from 'react'
 import style from '@styles/Messages.module.css'
-import { MessageT } from "@types"
+import { Message } from "@types"
 import Moment from 'react-moment';
 import { useSizeTranslator } from '@helpers';
 
 
 function Text(props : any){
-    const message : MessageT = props.message
+    const message : Message = props.message
 
     return(
         <div className={`${style.typeText} ${style.message}`}>
@@ -17,7 +17,7 @@ function Text(props : any){
 }
 
 function File(props : any){
-    const message : MessageT = props.message
+    const message : Message = props.message
     const size = useSizeTranslator(message.attachment?.size)
     return(
         <div className={`${style.typeFile} ${style.message}`}>
@@ -34,7 +34,7 @@ function File(props : any){
 }
 
 function Audio(props : any){
-    const message : MessageT = props.message
+    const message : Message = props.message
 
     return(
         <div className={`${style.typeAudio} ${style.message}`}>
@@ -52,7 +52,7 @@ function Audio(props : any){
 }
 
 function Image(props : any){
-    const message : MessageT = props.message
+    const message : Message = props.message
     return(
         <div className={`${style.typeImage} ${style.message}`}>
             <img src={message.attachment!.url} title={message.attachment!.name} className={style.image} alt=""/>
@@ -80,7 +80,7 @@ const MessagesTypes : MessageTypesT = {
     'File'    : File
 } 
 function ChatMessage(props : any){
-    const message : MessageT = props.message
+    const message : Message = props.message
     
     return(
         <div className={`${style.container} ${message.send_by === 'user' ? style.sendByUser : style.sendByContact}`}>

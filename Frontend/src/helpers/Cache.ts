@@ -1,12 +1,12 @@
-import { UserT } from "@types"
+import { User } from "@types"
 
 class Cache{
-    static getUser(id : number) : UserT | null{
+    static getUser(id : number) : User | null{
         const user = this.getEntry(`user-${id}`)
         if (!user) return null
-        return user as UserT
+        return user as User
     }
-    static saveUser(user : UserT) : void{
+    static saveUser(user : User) : void{
         this.saveEntry(`user-${user.id}`, user)
     }
     static getEntry(key : string | number) : Object | null{

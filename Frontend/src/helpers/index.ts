@@ -1,6 +1,8 @@
 import moment from 'moment'
 import 'moment-timezone';
 import 'moment/locale/pt-br';
+import Websocket from '@helpers/Websocket';
+import { useEffect, useState } from 'react';
 
 export function useDate(timestamp : number){
     if (timestamp.toString().length < 11) {
@@ -139,10 +141,10 @@ export function getCookie(cname : string){
     let ca = decodedCookie.split(';');
     for(let i = 0; i <ca.length; i++) {
         let c = ca[i];
-        while (c.charAt(0) == ' ') {
+        while (c.charAt(0) === ' ') {
         c = c.substring(1);
         }
-        if (c.indexOf(name) == 0) {
+        if (c.indexOf(name) === 0) {
         return c.substring(name.length, c.length);
         }
     }
@@ -153,3 +155,41 @@ export function isEmpty(obj : Object){
     && Object.keys(obj).length === 0
     && Object.getPrototypeOf(obj) === Object.prototype
 }
+
+export function entries(obj: Object){
+    return Object.entries(obj);
+}
+
+export function useEvent(callback: Function, event: string ){
+    const [uniqueID] = useState(uuidv4());
+
+    useEffect(()=>{
+        Websocket.on(uniqueID ,event, callback);
+
+    },[uniqueID, event, callback])
+
+    useEffect(()=>{
+        return ()=>{
+            Websocket.stopListening(uniqueID ,event)
+        }
+    },[uniqueID])
+
+    return uniqueID;
+}
+
+function uuidv4() {
+    /* eslint-disable*/
+    const lut = [];
+    for (var i=0; i<256; i++) { lut[i] = (i<16?'0':'')+(i).toString(16); }
+    
+    const d0 = Math.random()*0xffffffff|0;
+    const d1 = Math.random()*0xffffffff|0;
+    const d2 = Math.random()*0xffffffff|0;
+    const d3 = Math.random()*0xffffffff|0;
+    return lut[d0&0xff]+lut[d0>>8&0xff]+lut[d0>>16&0xff]+lut[d0>>24&0xff]+'-'+
+    lut[d1&0xff]+lut[d1>>8&0xff]+'-'+lut[d1>>16&0x0f|0x40]+lut[d1>>24&0xff]+'-'+
+    lut[d2&0x3f|0x80]+lut[d2>>8&0xff]+'-'+lut[d2>>16&0xff]+lut[d2>>24&0xff]+
+    lut[d3&0xff]+lut[d3>>8&0xff]+lut[d3>>16&0xff]+lut[d3>>24&0xff];
+    /* eslint-disable*/
+}
+  

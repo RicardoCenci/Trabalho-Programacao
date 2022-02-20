@@ -18,13 +18,11 @@ class UserController extends Controller{
           try {
                $user = auth()->user();
                $contacts = $user->contacts()->with('attachment')->get();
-
                $contacts_users = $contacts->pluck('contact_id');
                
                $other_users = User::select('id', 'first_name','last_name','photo')
                                    ->whereIn('id',$contacts_users)
                                    ->get();
-
                return new ContactsResponse($contacts, $other_users);
 
           } catch (\Throwable $th) {

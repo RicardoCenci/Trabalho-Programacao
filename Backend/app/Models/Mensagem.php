@@ -27,6 +27,20 @@ class Mensagem extends Model
     function attachment(){
         return $this->belongsTo(Attachment::class, 'attachment_id');
     }
+
+    function getTypeAttribute(){
+        if ($this->attachment_id) {
+            return 'Midia';
+        }
+        return 'Text';
+    }
+    function getSendByAttribute(){
+        return $this->sender_id == auth()->user()->id ? 'user' : 'contact';
+    }
+    function getTimestampAttribute(){
+        return isset($this->attributes['timestamp']) ? strtotime($this->attributes['timestamp']) : $this->created_at->timestamp;
+    }
+
     public function getMessageType(){
         $attachment = $this->attachment()->first();
 

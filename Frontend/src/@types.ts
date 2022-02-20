@@ -1,42 +1,47 @@
-import { FunctionComponent, MutableRefObject } from "react";
 
-export interface ContactT{
-    user : UserT,
-    last_message: {
-        send_by: string,
-        timestamp: number,
-        attachment: string | null, 
-        message_type : string | null,
-        text : string | null
+export interface Contact{
+    user : User
+    messages: {
+        items: Array<Message>,
+        allIds: Array<Number>,
+        getLastMessage: Function
     },
     unread_messages : number,
     color: {
-        background: string,
+        background : string,
         text: string
     }
 }
 
-export interface StatusT{
-    user : number,
-    last_status: AttachmentT,
+export interface ContactStatus{
+    user : User,
+    last_status: Status,
     status_count : number,
     unseen_status: number
 }
-export interface MessageT{
+export interface Status{
+    id : number,
+    description: string,
+    content: Attachment,
+    timestamp: number
+}
+export interface Message{
     id: number,
     send_by : 'user'|'contact',
     timestamp : number,
     text: string | null,
-    attachment : AttachmentT | null,
+    attachment : Attachment | null,
     message_type : "Image"|'File'|'Audio'|'Video' | 'Text'
 }
-export interface AttachmentT{
+export interface Attachment{
+    id: number,
     url  : string,
     name : string,
     extension : string,
-    size : number
+    size : number,
+    timestamp : number
 }
-export interface UserT{
+export interface User{
     id: number,
     first_name:string,
     last_name : string | null,
@@ -64,7 +69,7 @@ export interface HttpResponse{
         [ key: string] : any
     }
 }
-export interface GlobalContextT{
+export interface GlobalContext{
     [key:string] : any
     // contacts? : Array<ContactT>,
     // user?: UserT,

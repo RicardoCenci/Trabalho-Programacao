@@ -1,6 +1,7 @@
 import { MouseEventHandler, SyntheticEvent, useCallback, useLayoutEffect, useRef, useState } from "react"
 import style from '@styles/ContextMenu.module.css'
 import React from "react"
+import { useEvent } from "@helpers"
 interface Item{
     text: String
     action? : Function
@@ -19,7 +20,7 @@ const Container = React.forwardRef<HTMLDivElement, any>(({ itens , defaultAction
             return
         }
     },[defaultAction,closeMenu])
-    
+
     return(
         <div className={style.wrapper} onClick={handleWrapperClick}>
             <div className={style.container} ref={ref} {...props}>
@@ -63,7 +64,6 @@ const ContextMenu = ({icon = 'menu', className = '', itens, defaultAction, ...pr
 
     },[isOpen, buttonRef, containerRef])
     const handleWrapperClick = useCallback(()=>{
-        console.log(isOpen)
         if (isOpen) {
             setIsOpen(false)
         }

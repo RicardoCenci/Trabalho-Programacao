@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Attachment;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('image/{url}', function($url){
+    $attachment = Attachment::where('url', $url)->first();
+    abort_if(!$attachment, 404);
+    return $attachment->response();
+})->name('image');

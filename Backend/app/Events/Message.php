@@ -25,7 +25,15 @@ class Message implements ShouldBroadcast {
         
         $this->sender = $sender;
         $this->reciever = $reciever;
-        $this->message = $message;
+        $this->message = [
+            'id' => $message->id,
+            'send_by' => 'contact',
+            'text' => $message->text,
+            'attachment' => $message->attachment_id,
+            'message_type' => $message->type,
+            'timestamp' => $message->timestamp
+        ];
+
     }
 
     /**
@@ -35,6 +43,6 @@ class Message implements ShouldBroadcast {
      */
     public function broadcastOn()
     {
-        return new PrivateChannel(sha1('user.'.$this->reciever->id));
+        return new PrivateChannel('user.'.$this->reciever->id);
     }
 }

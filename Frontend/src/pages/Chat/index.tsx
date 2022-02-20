@@ -1,19 +1,42 @@
 import { GlobalContext } from '@contexts/GlobalContext'
-import { MessageT } from '@types'
-import { useCallback, useContext, useLayoutEffect, useRef } from 'react'
+import { useCallback, useContext, useEffect, useLayoutEffect, useRef } from 'react'
 import style from './Chat.module.css'
 import Input from '@components/Input'
 import DOMPurify from 'dompurify';
 import ChatMessage from '@components/Messages'
 import ContextMenu from '@components/ContextMenu'
-import { randomNumberBetween } from '@helpers'
+import { entries, randomNumberBetween } from '@helpers'
 import { recievedPage } from '@features/global/globalSlice'
 import { useAppDispatch } from '@store'
+import { useAppSelector } from '@hooks'
+import { getApi } from '@features/api/apiSlice'
+import defaultImage from '@images/default.png'
+import { recievedContactMessages, getContactMessages, recievedMessageFromUser } from '@features/contacts/contactsSlice'
+import { Message as MessageInterface } from '@types';
+
+
 function Chat(props:any){
-    const {currentContact,messages,setOpenChat,setMessages } = useContext(GlobalContext)
+
+    const {currentContact,setOpenChat } = useContext(GlobalContext)
+    
     const chatView = useRef<HTMLDivElement>(null)
     const input = useRef<HTMLDivElement>(null)
     const dispatch = useAppDispatch();
+
+    const api = useAppSelector(getApi)
+
+    const messages = useAppSelector(getContactMessages(currentContact.user.id))
+    
+    useEffect(()=>{
+        async function getData(){
+            const id = currentContact.user.id;
+            const response = await api.get(`/contacts/${id}/messages`)
+            dispatch(recievedContactMessages({contact_id: id, messages: response.body}))
+        }
+        getData();
+        /* eslint-disable  react-hooks/exhaustive-deps*/
+    },[])
+
 
     const closeChat = useCallback((e)=>{
         console.log('test');
@@ -21,20 +44,33 @@ function Chat(props:any){
         dispatch(recievedPage(null))
     },[setOpenChat])
 
-    const handleSendMessage = useCallback((message : MessageT)=>{
+    const handleSendMessage = useCallback((message : MessageInterface)=>{
         if (!input.current) {
             return
         }
-        setMessages([...messages, message])
+        async function sendMessage(){
+            const id = currentContact.user.id;
+            const body = message
+            const response = await api.post(`/contacts/${id}/send`, body)
+            if (response.ok) {
+                dispatch(recievedMessageFromUser(response.body))
+                return
+            }
+            console.error(response)
+        }
+
+        sendMessage()
         input.current.innerText = ''
-    },[setMessages,input,messages])
+        /* eslint-disable  react-hooks/exhaustive-deps*/
+    // },[setMessages,input,messages])
+    },[input])
 
     const handleInput = useCallback((e)=>{
         const inputValue = getInputValue()
         if (!inputValue || !input.current) {
             return
         }
-        const message : MessageT = {
+        const message : MessageInterface = {
             id: randomNumberBetween(0,1000) ,
             send_by : "user",
             attachment : null,
@@ -76,7 +112,7 @@ function Chat(props:any){
         if (!inputValue) {
             return
         }
-        const message : MessageT = {
+        const message : MessageInterface = {
             id: randomNumberBetween(0,1000),
             send_by : "user",
             attachment : null,
@@ -92,6 +128,7 @@ function Chat(props:any){
             chatView.current.scrollTo({top: chatView.current.scrollHeight, behavior: 'smooth'})
         }
     },[messages])
+
     const setTextCursorAtEnd = (contentEditableElement : any)=>{
             if(document.createRange){
                 const range = document.createRange();
@@ -114,7 +151,7 @@ function Chat(props:any){
             <div className={style.header} style={{backgroundColor:currentContact.color.background, color: currentContact.color.text}}>
                 <span className={`icon-arrow ${style.backIcon}`} onClick={closeChat}></span>
                 <div className={style.photo}>
-                    <img src={currentContact?.user.photo} alt={`${currentContact?.user.first_name} ${currentContact?.user.last_name}`} />
+                    <img src={currentContact?.user.photo ?? defaultImage} alt={`${currentContact?.user.first_name} ${currentContact?.user.last_name}`} />
                 </div>
                 <div className={style.title}>
                     <p>{`${currentContact?.user.first_name} ${currentContact?.user.last_name}`}</p>
@@ -127,9 +164,7 @@ function Chat(props:any){
             </div>
             <div className={style.content}>
                 <div className={style.chatView} ref={chatView}>
-                    {messages.map((message : MessageT)=>{
-                        return <ChatMessage key={message.timestamp} message={message} />
-                    })}
+                    {entries(messages).map(([index, message]) => <ChatMessage key={message.timestamp} message={message} />)}
                 </div>
                 
                 <Input innerRef={input} onKeyDown={handleTyping} onButtonClick={handleInput}/>
@@ -139,7 +174,3 @@ function Chat(props:any){
 }
 
 export default Chat
-
-function dispatch(arg0: { payload: any; type: string }) {
-    throw new Error('Function not implemented.')
-}

@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    public function __construct(Request $request){
+
+        if ($request->bearerToken()) {
+            $this->middleware('auth:sanctum')->only(['login']);
+        }
+
+    }
     //
     public function register(Request $request){
         $validator = Validator::make($request->all(), [
@@ -42,11 +49,36 @@ class AuthController extends Controller
             'token'=> $access_token
         ], 201);
     }
+
+    function websocket(Request $request){
+        $user_id = explode('private-user.', $request->channel)[1];
+        $user = auth()->user();
+        if ($user_id != $user->id) {
+            abort(401);
+        }
+
+        return [
+            'id' => $user->id,
+            'first_name'=> $user->first_name,
+            'last_name' => $user->last_name,
+            'photo'=>  $user->photo,
+        ];
+
+    }
+
     function login(Request $request){
+        if (auth()->check()) {
+            $user = auth()->user();
+            return response([
+                'user'=> $user,
+                'channel'=>'user.'.$user->id,
+            ]);
+        }
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
             'password' => 'required|string'
         ]);
+
         if($validator->fails()){
             return response([
                 "message" => "Validation Error",

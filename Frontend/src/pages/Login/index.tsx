@@ -4,8 +4,6 @@ import {
     Link, Redirect
 } from "react-router-dom";
 import { useCallback, useEffect, useRef, useState } from 'react';
-import {recievedMessages } from '@features/messages/messageSlice'
-// import API from '@helpers/APIInterface';
 
 import {createToken} from '@helpers/APIInterface'
 import createAPI from '@helpers/APIInterface'
@@ -14,15 +12,16 @@ import { useAppDispatch } from '@store';
 import { recievedUser } from '@features/user/userSlice';
 import { useAppSelector } from '@hooks';
 import { getApi, recievedAPI } from '@features/api/apiSlice';
-import { getCookie } from '@helpers';
+import { getCookie, isEmpty } from '@helpers';
 
 export default function Login(){
     const form = useRef(null)
     const [loginMessage, setLoginMessage] = useState<Object>('')
     const [passwordMessage, setPasswordMessage] = useState<Object>('')
+
     const [loading,setLoading] = useState(false)
     const dispatch = useAppDispatch()
-    const user = useAppSelector(state => state.user.isAuthenticated)
+    const user = useAppSelector(state => state.user)
     const api = useAppSelector(getApi)
 
     const handleSubmit = useCallback(async ()=>{
@@ -30,7 +29,9 @@ export default function Login(){
             console.error('Something went wrong');
             return
         }
-
+        if(user.isAuthenticated) {
+            return
+        }
         const payload = new FormData(form.current);
 
         const fieldRequiredMessage = {icon: 'icon-close', text: 'This field is required', color: 'red'};
@@ -70,7 +71,7 @@ export default function Login(){
         if ( API.isAuthenticated()) {
             dispatch(recievedAPI(API))
         }
-    },[form])
+    },[form, dispatch])
 
     
     useEffect(()=>{
@@ -88,11 +89,11 @@ export default function Login(){
             return  
         }
         checkToken(t)
-    },[])
+    },[dispatch])
 
     return(
         <div className={style.container}>
-            {user && Object.keys(api).length > 0 && <Redirect to="/"/>}
+            {user.isAuthenticated && !isEmpty(api) && <Redirect to="/"/>}
             {loading && <div className={style.loading}><span></span></div>}
             <h1>Login</h1>
             <form action="" ref={form}>

@@ -29,9 +29,11 @@ class ContactsController extends Controller
 
         $fields = $validator->validated();
         $sender = auth()->user();
+
         if ($sender->id == $id) {
             return $this->badRequest('Sender cannot send messages to itself');
         }
+
         $recipient = User::find($id);
         if (!$recipient) {
             return $this->notFound('User not found');
@@ -47,7 +49,7 @@ class ContactsController extends Controller
                 $conversa = Conversa::createBetween($sender, $recipient);
             }
 
-            if (array_key_exists('attachment', $fields)) {
+            if (isset($fields['attachment'])) {
                 try{
                     $attachment = Attachment::store($fields['attachment']);
                     if (!$attachment) {
@@ -66,8 +68,18 @@ class ContactsController extends Controller
             DB::commit();
 
             event(new \App\Events\Message($sender, $recipient, $message));
-
-            return $message;
+ 
+            return [
+                'sender' => $recipient,
+                'message' => [
+                    'id' => $message->id,
+                    'send_by' => $message->send_by,
+                    'attachment' => $message->attachment,
+                    'message_type' => $message->type,
+                    'text' => $message->text,
+                    'timestamp' => $message->timestamp,
+                ]
+            ];
         }catch(\Exception $e){
             DB::rollBack();
             return $this->handleError($e);
@@ -157,5 +169,33 @@ class ContactsController extends Controller
 
         return response(new UserProfileResponse($user), 200);
     }
+    public function getMessages($id){
 
+        $sender = auth()->user();
+        if ($sender->id == $id) {
+            return [];
+        }
+
+        $recipient = User::find($id);
+
+        if (!$recipient) {
+            return $this->notFound('User not found');
+        }
+
+        $conversa = $recipient->conversa($id);
+        $mensagens = $conversa->mensagens;
+        $response = [];
+        foreach ($mensagens as $mensagem) {
+            $response[] = [
+                'id' => $mensagem->id,
+                'send_by' => $mensagem->send_by,
+                'timestamp' => $mensagem->timestamp,
+                'text' => $mensagem->text,
+                'attachment' => $mensagem->attachment,
+                'message_type' => $mensagem->type
+            ];
+        }
+
+        return $response;
+    }
 }

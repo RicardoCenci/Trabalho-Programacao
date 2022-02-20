@@ -16,6 +16,8 @@ Route::group(['api'], function(){
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
     
+    Route::post('channel/auth', [AuthController::class, "websocket"]);
+
     Route::prefix('my')->group(function(){
 
 
@@ -42,6 +44,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::post('/{userID}/block', [ContactsController::class, "blockUser"]);
         Route::post('/{userID}/unblock', [ContactsController::class, "unblockUser"]);
         Route::get('/{userID}/profile', [ContactsController::class, "getProfile"]);
+        Route::get('/{userID}/messages', [ContactsController::class, "getMessages"]);
         
     });
 
@@ -68,5 +71,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/logout', [AuthController::class, "logout"]);
     Route::post('/verify', [AuthController::class, "verifyToken"]);
 });
+
 
     

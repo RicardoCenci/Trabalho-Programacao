@@ -3,11 +3,9 @@ import style from '@styles/Menu.module.css'
 import { SyntheticEvent, useCallback, useContext, useEffect } from 'react'
 import ContextMenu from './ContextMenu'
 import logoStandalone from '@images/Logo Standard.svg'
-import { useAppSelector } from '@hooks'
 
 export default function Menu(props : any){
     const {activeTab, setActiveTab , activePageComponent} = useContext(GlobalContext)
-    const page = useAppSelector(state => state.global.popupPage);
 
     const handleClick = useCallback((e : SyntheticEvent, tab : any)=>{
         activePageComponent.current = tab.component
@@ -22,7 +20,7 @@ export default function Menu(props : any){
     const handleContextMenu = useCallback((e)=>{alert(e)},[])
     return(
         <div className={style.container}>
-            <img src={logoStandalone}/>
+            <img src={logoStandalone} alt=""/>
             <div className={style.icons}>
                 <span className={`${style.search} icon-magnify-glass ${style.icon}`}></span>
                 <ContextMenu icon={'menu'} className={`${style.icon} ${style.contextMenu}`} itens={[

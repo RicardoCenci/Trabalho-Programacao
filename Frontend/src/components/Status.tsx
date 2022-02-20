@@ -1,20 +1,18 @@
-import { StatusT } from "@types"
+import { ContactStatus } from "@types"
 import style from '@styles/Status.module.css'
 import photo from '@images/tree-736885__480.jpg'
 import userp from '@images/default.png'
+import { useCallback } from "react"
 
-function Status({status, ...props} : {status?: StatusT, [key:string]:any}){
-    const status1 = {last_status:{
-        url: photo
-    }} 
-    const user = {
-        photo: userp,
-        first_name: 'Ricardo',
-        last_name:'Cenci Fabris',
-
-    }
+function Status({status, onClick, ...props} : {status: ContactStatus, [key:string]:any}){
+    const user = status.user
+    const click = useCallback(() =>{
+        if (typeof onClick === 'function') {
+            onClick(status)
+        }
+    },[status, onClick])
     return(<>
-        <div className={style.container} {...props} style={{backgroundImage: `url(${status1.last_status.url})`}}>
+        <div className={style.container} {...props} onClick={click} style={{backgroundImage: `url(${status.last_status.content.url})`}}>
             <div className={style.userPhoto}>
                 <div className={style.userPhotoRouded}>
                     <img src={user.photo} alt={`${user.first_name} ${user.last_name}`}/>

@@ -4,16 +4,16 @@ import { useContext } from 'react';
 import React from 'react';
 import { AnimatePresence, motion } from "framer-motion"
 import { useAppSelector } from '@hooks';
-import { getApi } from '@features/api/apiSlice';
 
 export default function App() {
-  const { activePageComponent, activeTab, currentContact, openChat } = useContext(GlobalContext)
+  const { activePageComponent, activeTab} = useContext(GlobalContext)
   const page = useAppSelector(state => state.global.popupPage);
 
 
   if (typeof activePageComponent?.current !== 'function') {
     return (<div>Loading...</div>)
   }
+  
   const transitions: { [key: string]: any } = {
     Status: {
       initial: { x: '100%' },
@@ -53,10 +53,4 @@ export default function App() {
 
     </AnimatePresence>
   </>);
-}
-function PopupPage({ page = null }: { page: any }) {
-  return (<>
-    {page && page}
-  </>
-  )
 }

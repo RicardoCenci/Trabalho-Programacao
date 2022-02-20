@@ -43,5 +43,7 @@ export const getApi = createSelector(
     (state : RootState) => state.api.current,
     (api)=>api
 )
+
+
 export const { recievedAPI } = apiSlice.actions
 export default apiSlice.reducer;

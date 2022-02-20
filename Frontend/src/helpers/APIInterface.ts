@@ -1,13 +1,9 @@
-import Cache from "@helpers/Cache"
-import { HttpResponse, UserT } from "@types"
-import image from '@images/tree-736885__480.jpg'
-import { useAppSelector, useAppDispatch } from '@hooks'
-import { getCookie } from '@helpers'
-import { is } from "@reduxjs/toolkit/node_modules/immer/dist/internal"
+import { HttpResponse } from "@types"
 
 export default async function createAPI(credentials: any, callbacks : {onSuccess? : Function, onError?: Function} = {}) {
     const endpoint = process.env.REACT_APP_API_ENDPOINT || '127.0.0.1:8000'
     var authenticationSuccess = false;
+
     function isToken(obj : Object){
         return  obj.hasOwnProperty('isValid') ||
                 obj.hasOwnProperty('refresh') ||
@@ -108,13 +104,20 @@ export default async function createAPI(credentials: any, callbacks : {onSuccess
             ...header
         })
         try{
-            !isToken(token) || headers.set('Authentication',`Bearer ${token.get()}`)
+            !isToken(token) || headers.set('Authorization',`Bearer ${token.get()}`)
         }catch(e){
             if (!(e instanceof ReferenceError)) {
                 console.error(e)
             }
         }
         return headers
+    }
+
+    function getUser(){
+        return token.getUser();
+    }
+    if (isToken(credentials)) {
+        authenticationSuccess = await credentials.isValid();
     }
 
     const token = isToken(credentials) ? credentials : await login(credentials) 
@@ -125,35 +128,53 @@ export default async function createAPI(credentials: any, callbacks : {onSuccess
         delete: del,
         update: update,
         logout: logout,
+        getUser: getUser,
         isAuthenticated
     }
 }
 
+export interface Token {
+    get(): any,
+    isValid() : any,
+    refresh() : any,
+    destroy() : any
+    getUser() : any
+}
 
-export function createToken(token:string){
+export interface LoggedUser{
+    "id": number,
+    "first_name": string,
+    "last_name": string,
+    "photo": string|null,
+    "channel": string
+}
+export function createToken(token:string) : Token{
     const authEndpoint = process.env.REACT_APP_API_ENDPOINT || 'localhost:8000'
+
+    var user: LoggedUser|null = null;
 
     function get(){
         return token
     };
 
     async function isValid(){
-        var r : any = {
-            status : 500
-        };
-        await fetch(authEndpoint + '/verify', {
+        if (user) {
+            return true;
+        }
+        const response = await fetch(authEndpoint + '/login', {
             method:'POST',
             headers:{
                 'Accept' : 'application/json',
                 'Content-Type': 'application/json',
                 'Authorization' : `Bearer ${token}`
             },  
-        })
-        .then(createResponse)
-        .then(res =>{
-            r = res
-        })
-        return r
+        }).then(createResponse)
+
+        if (response.status == 200) {
+            user = {...response.body.user, channel: response.body.channel}
+            return true;
+        }
+        return false
     };
 
     async function createResponse(response : Response){
@@ -169,9 +190,14 @@ export function createToken(token:string){
 
     function refresh(){};
     function destroy(){};
+    function getUser(){
+        return user
+    };
+
     return{
         get,
         isValid,
+        getUser,
         refresh,
         destroy
     }

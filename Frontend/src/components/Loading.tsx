@@ -10,7 +10,8 @@ export default function LoadingScreen(){
     return ( 
         <div className={style.container}>
             <img src={logo}/>
-            <LoadingBar percentage={loading}/>
+            <p>Carregando</p>
+            {/* <LoadingBar percentage={loading}/> */}
         </div>
     )
 

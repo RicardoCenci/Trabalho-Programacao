@@ -19,12 +19,18 @@ class Contacts extends BaseResponse{
     private function createContact($contact, $user){
         return [
             'user' => $user,
-            'last_message'=>[
-                'send_by' => auth()->user()->id == $user->id ? 'user' : 'contact',
-                'timestamp' => strtotime($contact->timestamp),
-                'attachment' =>  new AttachmentResponse($contact->attachment()->first()),
-                'message_type' => $contact->getMessageType(),
-                'text'=> $contact->text
+            'messages'=>[
+                'items' => [
+                    $contact->id => [
+                        'send_by' => auth()->user()->id == $user->id ? 'user' : 'contact',
+                        'timestamp' => $contact->timestamp,
+                        'attachment' =>  new AttachmentResponse($contact->attachment()->first()),
+                        'message_type' => $contact->getMessageType(),
+                        'text'=> $contact->text
+                    ]
+                ],
+                'allIds' => [$contact->id],
+               
             ],
             'unread_messages' => 0
         ];

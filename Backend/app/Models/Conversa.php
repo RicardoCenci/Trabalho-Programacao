@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Conversa extends Model
 {
@@ -12,7 +13,9 @@ class Conversa extends Model
         'first_user',
         'second_user'
     ];
-
+    protected $casts =[
+        'created_at' => 'datetime'
+    ];
     public static function createBetween($user1, $user2){
         $user1ID = gettype($user1) === 'object' ? $user1->id : $user1;
         $user2ID = gettype($user2) === 'object' ? $user2->id : $user2;
@@ -23,6 +26,7 @@ class Conversa extends Model
         ]);
     }
     function mensagens(){
-        return $this->hasMany(Mensagem::class);
+        return $this->hasMany(Mensagem::class, 'conversation_id', 'id');
     }
+
 }
